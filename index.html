@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet"> 
+
+    <title>RFAB + Steam Guide</title>
+</head>
+<body>
+    <main>
+        <img src="RFAB Logo Refined.png" id="rfab-logo">
+
+        <h1>Реквием и Steam</h1>
+
+        <h2>Оглавление</h2>
+        <div class="table-of-contents">
+            <a href="#purpose">Цель этой инструкции</a>
+            <a href="#prerequisites">Что нам понадобится</a>
+            <a href="#sddusage">Использование Steam Depot Downloader</a>
+            <a href="#depots">Скачивание хранилищ</a>
+            <a href="#connecting">Соединяем хранилища</a>
+            <a href="#replacing">Заменяем 1.6.X на 1.5.97.0.8</a>
+            <a href="#final-setup">Установка сборки</a>
+        </div>
+
+        <h2 id="purpose">Цель этой инструкции</h2>
+        <p>11 ноября 2021 года Bethesda выпустила для Skyrim Special Edition обновление 1.6 или "Anniversary Edition", добавляющее в игру несколько модов из Creation Club и, что самое главное, вносящее изменения в исполняемый файл игры. В результате этого различные инструменты моддинга перестали работать, некоторые не работают с AE до сих пор. Bethesda не вынесла старую версию 1.5.97.0.8 в альтернативную ветку, а потому возможности откатиться через Steam клиент нет.</p>
+        <p>Проект Requiem For A Balance также совместим только с версией 1.5.97.0.8 Special Edition, а потому предлагаю вам ознакомиться с методом отката лицензии без сторонних патчеров (они любят ломать вещи) и без образов с пиратских сайтов.</p>
+        <p>Для этого мы будем использовать open-source утилиту Steam Depot Downloader, далее "SDD". Она использует библиотеку SteamKit2 для взаимодействия с сетью Steam и позволяет загружать определённые хранилища Steam определённых манифестов (разные версии).</p>
+        <p class="hint">Хранилища, в свою очередь, <q title="Документация Steamworks">это логически организованное объединение файлов, которое пользователь загружает как единую группу. Каждому хранилищу присваивается уникальный идентификационный номер (DepotID). Когда пользователь устанавливает приложение, одно или несколько хранилищ загружаются и «подключаются» на локальном жестком диске</q>.</p>
+        <p>Например, "под капотом" Steam скачивает Skyrim SE как четыре разных хранилища - Skyrim Special Edition disk (ID 489831), Skyrim Special Edition core (ID 489832), Skyrim Special Edition exe (ID 489833) и Skyrim Special Edition russian (ID 489838), если у вас стоит русская локализация в свойствах.</p>
+
+        <h2 id="prerequisites">Что нам понадобится</h2>
+        <ul>
+            <li>Steam с установленным Skyrim Special Edition</li>
+            <li><a href="https://github.com/SteamRE/DepotDownloader/releases">Последний релиз SDD</a></li>
+            <li><a href="https://skyrimrequiem.ru/#instal">Архив со сборкой RFAB</a> последней версии</li>
+            <li><a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-5.0.13-windows-x64-installer">NET 5.0 Runtime (для RFAB)</a></li>
+            <li><a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.5-windows-x64-installer">NET 6.0 Runtime (для SDD)</a></li>
+        </ul>
+
+        <h2 id="sddusage">Использование Steam Depot Downloader</h2>
+        <p>Архив с SSD стоит распаковать в произвольную папку. После этого зайдите в неё и откройте терминал.</p>
+        <img src="1.png" alt="Открыть терминал можно, щёлкнув по пустому пространству папки ПКМ">
+        <p>Синтаксис команд у SDD имеет следующий вид:</p>
+        <code>dotnet DepotDownloader.dll -app &lt;id&gt; -depot &lt;id&gt; -manifest &lt;id&gt; -username &lt;username&gt; -password &lt;password&gt;</code>
+        <p>По порядку:</p>
+        <dl>
+            <dt>dotnet DepotDownloader.dll</dt>
+            <dd>Используя NET 6.0 запустить DepotDownloader.dll</dd>
+            <dt>-app &lt;id&gt;</dt>
+            <dd>... для определённого приложения</dd>
+            <dt>-depot &lt;id&gt;</dt>
+            <dd>... загрузить определённое хранилище</dd>
+            <dt>-manifest &lt;id&gt;</dt>
+            <dd>... определённой версии</dd>
+            <dt>-username  &lt;username&gt;</dt>
+            <dd>... ваш логин Steam</dd>
+            <dt>-password &lt;password&gt;</dt>
+            <dd>... ваш пароль Steam</dd>
+        </dl>
+        <p>Да, именно. Ваш логин и пароль. Утилита передаст их серверам Steam, а затем запросит подтверждение, если у вас настроена двухфакторная аутентификация. Это нужно для того, чтобы подтвердить наличие у вас лицензии. Если сомневаетесь, откройте ссылку на релиз и неспешно ознакомьтесь с проектом утилиты. Это оригинальный репозиторий, не форк моего авторства.</p>
+
+        <h2 id="depots">Скачивание хранилищ</h2>
+        <p>Теперь, когда вы ознакомились со швейцарским ножом даунгрейда, предлагаю вам начать скачивать хранилища по порядку.</p>
+        <p>Самостоятельно узнать, какие хранилища существуют для SE, вы можете в <a href="https://steamdb.info/app/489830/depots/">базе данных</a>.</p>
+        <p>Начнём с 489831 Skyrim Special Edition disk<br>Это хранилище содержит внутренности каталога Data, но не этот манифест нам нужен:</p>
+        <img src="3.png">
+        <p>Нам нужен манифест шестилетней давности. Последняя версия хранилища перед обновлением 1.6. Этот манифест имеет ID 7848722008564294070 и вы можете найти его во вкладке Manifests слева.</p>
+        <p>При переходе по этому ID файлы внутри окажутся недоступными для просмотра. Но не волнуйтесь. Это именно то, что мы ищем:</p>
+        <img src="4.png">
+        <p>Скачиваем хранилище:</p>
+        <code>dotnet DepotDownloader.dll -app 489830 -depot 489831 -manifest 7848722008564294070 -username &lt;steam-username&gt; -password &lt;steam-password&gt;</code>
+        <p>Если утилита пожалуется вам на отсутствие NET 6.0, перейдите по ссылке (она будет указана в выводе) и установите его.</p>
+        <p class="warn">Иногда во время загрузки происходит ошибка получения чанка данных. После завершения команды, проверьте, не было ли у вас таких ошибок и если были, просто введите команду в точности ещё раз. Не волнуйтесь, утилита не будет скачивать всё заново. Она просто доскачает нужное.</p>
+        <p>Итог должен выглядеть примерно так:</p>
+        <img src="2.png">
+        <p>Повторяем по тому же принципу с тремя остальными командами:</p>
+        <code>dotnet DepotDownloader.dll -app 489830 -depot 489832 -manifest 8702665189575304780 -username &lt;steam-username&gt; -password &lt;steam-password&gt;</code>
+        <p class="hint">Skyrim Special Edition core - Большое хранилище с шейдерами, интерфейсом, текстурами, библиотеками, лаунчером и, по сути, всем, что в первое не поместилось</p>
+        <code>dotnet DepotDownloader.dll -app 489830 -depot 489833 -manifest 2289561010626853674 -username &lt;steam-username&gt; -password &lt;steam-password&gt;</code>
+        <p class="hint">Skyrim Special Edition exe - Одиночный исполняемый файл, загрузится за мгновение, не отходите далеко</p>
+        <code>dotnet DepotDownloader.dll -app 489830 -depot 489838 -manifest 6206633033379583541 -username &lt;steam-username&gt; -password &lt;steam-password&gt;</code>
+        <p class="hint">Skyrim Special Edition russian - Русская локализация</p>
+
+        <h2 id="connecting">Соединяем хранилища</h2>
+        <p>Теперь, когда вы скачали все четыре хранилища, вы можете переместиться в каталог depots в папке вашего SDD:</p>
+        <img src="5.png">
+        <p>Это наша игра, просто по частям. Для удобства предлагаю создать каталог 1.5.97.0.8 Backup и сбросить туда содержимое всех хранилищ. В каждом хранилище будет единичная папка с ID манифеста и уже внутри неё нужные нам данные. Соединяем все по порядку (!) в новый каталог, папки .DepotDownloader не берём.</p>
+        <p>На выходе получаем ровно вот такую картину:</p>
+        <img src="6.png">
+
+        <h2 id="replacing">Заменяем 1.6.X на 1.5.97.0.8</h2>
+        <p> Зайдите в свою библиотеку Steam и нажмите ПКМ на строке Skyrim Special Edition -> Выберите Manage -> Browse Local Files. Затем удалите всё внутри каталога.</p>
+        <img>
+        <video autoplay loop>
+            <source src="7.mp4">
+        </video>
+        <p>Теперь скопируйте на место удалённых файлов содержимое каталога с версией 1.5.97.0.8. Почему сначала нужно было качать новую версию через Steam, если мы её удалим? В противном случае при попытке запустить исполняемый файл Skyrim, Steam бы автоматически начал бы скачивать новую версию. А в нашем случае он думает, что всё обновлено и не мешает нам.</p>
+        <video autoplay loop>
+            <source src="8.mp4">
+        </video>
+        <p>Теперь запустите Скайрим через Steam и настройте графику по своему вкусу в лаунчере. После этого запускать саму игру не нужно, можете просто закрыть и приступить к настройке RFAB.</p>
+        <p class="warn">Иногда встречаются ошибки по типу "Cannot find .INI file". <a href="https://help.bethesda.net/#en/answer/41792">Ответ поддержки Bethesda по этому поводу</a>.</p>
+        <p class="warn">Если ваши инструменты не видят каталог Data после переустановки игры таким способом, попробуйте поправить запись Installed Path в реестре Computer\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition\</p>
+
+        <h2 id="final-setup">Установка сборки</h2>
+        <p>Устанавливаете сборку <a href="https://skyrimrequiem.ru/#instal">по инструкции</a>. Вот запись того, как это получилось у меня, плюс проверка с запуском игры. Все медленные части процесса ускорены:</p>
+        <iframe src="https://www.youtube.com/embed/cYCdh0Qlu-A" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p>Готово! Надеюсь, что у вас не возникло проблем. Если нашли опечатку или неточность, пожалуйста, напишите мне: Silent Lumi#6662</p>
+    </main>
+</body>
+</html>

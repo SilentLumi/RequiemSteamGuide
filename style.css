@@ -1,0 +1,82 @@
+html {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25em;
+    background: rgb(233, 233, 233);
+}
+
+main {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: '→';
+}
+
+q {
+    font-style: italic;
+}
+
+code {
+    display: block;
+    border: 1px solid black;
+    border-radius: 3px;
+    background: white;
+    padding: 5px 10px;
+    margin: 5px 0px;
+}
+
+dd {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+p.hint {
+    color: hsla(0, 0%, 0%, 0.7);
+    font-size: 0.8em;
+}
+
+p.hint::before {
+    content: "Пояснение: ";
+}
+
+p.warn {
+    color: hsla(0, 92%, 15%, 0.7);
+    font-size: 0.8em;
+}
+
+p.warn::before {
+    content: "Внимение: ";
+}
+
+img, video {
+    max-width: 1000px;
+}
+
+#rfab-logo {
+    width: 500px;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.699));
+}
+
+.table-of-contents {
+    display: flex;
+    flex-direction: column;
+}
+
+iframe {
+    width: 1000px;
+    height: 562px;
+}
