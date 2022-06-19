@@ -118,5 +118,26 @@
         </video>
         <p>Готово! Надеюсь, что у вас не возникло проблем. Если нашли опечатку или неточность, пожалуйста, напишите мне: Silent Lumi#6662</p>
     </main>
+
+    <script>
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+        var themeWarning = document.createElement("p");
+        var themeButton = document.createElement("button");
+        themeWarning.classList.add("warn");
+        themeButton.innerText = "Магия изменения: смена палитры"
+
+        if (prefersDarkScheme.matches) {
+            document.body.classList.add("dark");
+            themeWarning.innerText = "Кажется, вы предпочитаете использовать тёмное оформление. Если это не так и ваш браузер нагло мне врёт:";
+        } else {
+            document.body.classList.remove("dark");
+            themeWarning.innerText = "Кажется, вы предпочитаете использовать светлое оформление. Если это не так и ваш браузер нагло мне врёт:";
+        }
+        themeButton.onclick = () => {
+            document.body.classList.toggle("dark");
+        }
+        document.body.querySelector("main").prepend(themeWarning, themeButton);
+    </script>
 </body>
 </html>

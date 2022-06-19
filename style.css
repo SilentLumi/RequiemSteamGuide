@@ -1,7 +1,11 @@
-html {
+body {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.25em;
+    font-size: 1.1em;
     background: rgb(233, 233, 233);
+}
+body.dark {
+    background: rgb(22, 22, 22);
+    color: white;
 }
 
 main {
@@ -9,14 +13,16 @@ main {
     margin: 0 auto;
 }
 
-h1, h2 {
+h2 {
+    margin: 100px 0 10px;
+}
+h2:first-of-type {
     margin: 10px 0;
 }
 
 a {
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: underline;
 }
@@ -29,35 +35,46 @@ q {
     font-style: italic;
 }
 
-code {
-    display: block;
-    border: 1px solid black;
-    border-radius: 3px;
-    background: white;
-    padding: 5px 10px;
-    margin: 5px 0px;
+dd {
+    color:rgba(0, 0, 0, 0.7);
+}
+body.dark > main > dl > dd {
+    color:rgba(255, 255, 255, 0.7);
 }
 
-dd {
-    color: rgba(0, 0, 0, 0.5);
+code {
+    display: block;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.2);
+}
+body.dark > main > code {
+    /* Потому что SCSS для слабаков */
+    border: 1px solid white;
 }
 
 p.hint {
-    color: hsla(0, 0%, 0%, 0.7);
     font-size: 0.8em;
+    color:rgba(0, 0, 0, 0.7);
 }
-
+body.dark > main > p.hint {
+    color: rgba(255, 255, 255, 0.7)
+}
 p.hint::before {
     content: "Пояснение: ";
 }
 
 p.warn {
-    color: hsla(0, 92%, 15%, 0.7);
     font-size: 0.8em;
+    color: rgba(182, 80, 12, 0.7);
 }
-
+body.dark > main > p.warn {
+    color: rgba(233, 148, 92, 0.7);
+}
 p.warn::before {
-    content: "Внимение: ";
+    content: "Внимание: ";
 }
 
 img, video {
@@ -68,10 +85,44 @@ img, video {
     width: 500px;
     margin: 0 auto;
     display: block;
-    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.699));
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.7));
+}
+body.dark > main > #rfab-logo {
+    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.1));
 }
 
 .table-of-contents {
     display: flex;
     flex-direction: column;
+}
+
+p:first-of-type {
+    margin-bottom: 0;
+}
+
+button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0.8em;
+    font-weight: bold;
+    color:rgba(241, 77, 28, 0.7);
+    text-decoration: underline;
+    cursor: pointer;
+    text-shadow: 0 0 2px red;
+    animation: text-shadow-animation 2s infinite;
+}
+
+@keyframes text-shadow-animation {
+    0% {
+        text-shadow: 0 0 0 transparent;
+    }
+
+    50% {
+        text-shadow: 0 0 3px red;
+    }
+
+    100% {
+        text-shadow: 0 0 0 transparent;
+    }
 }
