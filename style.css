@@ -9,7 +9,7 @@ body.dark {
 }
 
 main {
-    width: 1000px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -78,7 +78,7 @@ p.warn::before {
 }
 
 img, video {
-    max-width: 1000px;
+    max-width: 100%;
 }
 
 #rfab-logo {
