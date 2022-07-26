@@ -41,7 +41,7 @@
 
         <h2 id="prerequisites">Что нам понадобится</h2>
         <ul>
-            <li>Steam с установленным Skyrim Special Edition</li>
+            <li><a href="https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/">Steam с установленным Skyrim Special Edition</a></li>
             <li><a href="https://github.com/SteamRE/DepotDownloader/releases">Последний релиз SDD</a></li>
             <li><a href="https://skyrimrequiem.ru/#instal">Архив со сборкой RFAB</a> последней версии</li>
             <li><a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.5-windows-x64-installer">NET 6.0 Runtime (для SDD)</a></li>
@@ -61,25 +61,11 @@
         </p>
         <p>Синтаксис команд у SDD имеет следующий вид:</p>
         <code>dotnet DepotDownloader.dll -app &lt;id&gt; -depot &lt;id&gt; -manifest &lt;id&gt; -username &lt;username&gt; -password &lt;password&gt;</code>
-        <p>По порядку:</p>
-        <dl>
-            <dt>dotnet DepotDownloader.dll</dt>
-            <dd>Используя NET 6.0 запустить DepotDownloader.dll</dd>
-            <dt>-app &lt;id&gt;</dt>
-            <dd>... для определённого приложения</dd>
-            <dt>-depot &lt;id&gt;</dt>
-            <dd>... загрузить определённое хранилище</dd>
-            <dt>-manifest &lt;id&gt;</dt>
-            <dd>... определённой версии</dd>
-            <dt>-username  &lt;username&gt;</dt>
-            <dd>... ваш логин Steam</dd>
-            <dt>-password &lt;password&gt;</dt>
-            <dd>... ваш пароль Steam</dd>
-        </dl>
-        <p>Да, именно. Ваш логин и пароль. Утилита передаст их серверам Steam, а затем запросит подтверждение, если у вас настроена двухфакторная аутентификация. Это нужно для того, чтобы подтвердить наличие у вас лицензии. Если сомневаетесь, откройте ссылку на релиз и неспешно ознакомьтесь с проектом утилиты. Это оригинальный репозиторий, не форк моего авторства.</p>
+        <p class="hint">Фигурные скобки вводить не нужно, это обозначение плейсхолдера.</p>
+        <p class="hint">SDD использует утилиту SteamKit2 для общения с сетью Valve. Именно поэтому программа, получив данные входа в вашу учётную запись, может попросить код Steam Guard. Не беспокойтесь, это нужно для подтверждения наличия у вас лицензии. В любом случае, у SDD открытый исходный код и вы можете проверить и убедиться, что в данном случае ваш пароль нужен только Гейбу Ньюеллу.</p>
 
         <h2 id="depots">Скачивание хранилищ</h2>
-        <p>Теперь, когда вы ознакомились со швейцарским ножом даунгрейда, предлагаю вам начать скачивать хранилища по порядку.</p>
+        <p>Теперь, когда весь инструментарий на месте, предлагаю вам начать скачивать хранилища по порядку.</p>
         <p>Самостоятельно узнать, какие хранилища существуют для SE, вы можете в <a href="https://steamdb.info/app/489830/depots/">базе данных</a>.</p>
         <p>Начнём с 489831 Skyrim Special Edition disk<br>Это хранилище содержит внутренности каталога Data, но не этот манифест нам нужен:</p>
         <img src="3.png">
